@@ -1,0 +1,224 @@
+<!--
+Magizh Krafties - Single-file marketing website
+Customize: update IMAGES, CONTACT_EMAIL, INSTAGRAM handle and text content.
+Created for the user's Instagram shop "Magizh Krafties" (handmade polaroids & custom gifts)
+-->
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Magizh Krafties — Handmade Gifts & Polaroids</title>
+  <meta name="description" content="Magizh Krafties — turning memories into timeless treasures. Handmade polaroids, custom frames & personalized gifts." />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--accent:#F59E0B;--muted:#6B7280;--bg:#fff;--card:#f8fafc}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Montserrat,system-ui,Arial, sans-serif;background:linear-gradient(180deg,#fff 0%,#fbfaf8 100%);color:#111}
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:rgba(255,255,255,0.6);backdrop-filter:blur(6px);position:sticky;top:0;z-index:20;border-bottom:1px solid #eee}
+    .logo{display:flex;gap:12px;align-items:center}
+    .logo .dot{width:42px;height:42px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700}
+    nav a{margin-left:16px;text-decoration:none;color:var(--muted);font-weight:600}
+    .container{max-width:1100px;margin:30px auto;padding:0 20px}
+
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center}
+    .hero h1{font-size:34px;margin:0 0 12px}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .cta{display:flex;gap:12px}
+    .btn{padding:12px 18px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+    .btn-primary{background:var(--accent);color:#fff}
+    .btn-outline{background:transparent;border:2px solid #eee;color:var(--muted)}
+
+    .card{background:var(--card);padding:18px;border-radius:14px;box-shadow:0 6px 20px rgba(15,23,42,0.04)}
+
+    .pricing{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+    .price-item{flex:1;min-width:160px;padding:12px;border-radius:12px;background:#fff;border:1px dashed #f3e7d6}
+    .price-item h4{margin:6px 0}
+    .gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+    .gallery img{width:100%;height:160px;object-fit:cover;border-radius:10px}
+
+    form .row{display:flex;gap:10px}
+    form input,form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e6e6}
+    form textarea{min-height:120px;resize:vertical}
+
+    footer{margin-top:40px;padding:28px 20px;border-top:1px solid #eee;background:transparent}
+    .social a{margin-right:12px;text-decoration:none;color:var(--muted);font-weight:700}
+
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr;}
+      .gallery{grid-template-columns:repeat(2,1fr)}
+    }
+    @media (max-width:520px){
+      .gallery{grid-template-columns:1fr}
+      header{padding:12px}
+      .logo .dot{width:36px;height:36px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <div class="dot">MK</div>
+      <div>
+        <div style="font-weight:700">Magizh Krafties</div>
+        <div style="font-size:12px;color:var(--muted)">Handmade gifts · Polaroids · Custom frames</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#products">Products</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#order">Order</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <div>
+        <h1>We turn your memories into timeless treasures</h1>
+        <p>Magizh Krafties creates handcrafted polaroids, personalised frames and unique gift items — perfect for anniversaries, birthdays, and keepsakes. Fast turnaround and made with love.</p>
+        <div class="cta">
+          <button class="btn btn-primary" onclick="openInstagram()">Message on Instagram</button>
+          <a href="#order" class="btn btn-outline">Order Now</a>
+        </div>
+
+        <div class="card" style="margin-top:18px">
+          <strong>Polaroid Rates</strong>
+          <div class="pricing">
+            <div class="price-item">
+              <div style="font-size:12px;color:var(--muted)">Mini</div>
+              <h4>5×7 — ₹5 / pc</h4>
+              <div style="font-size:12px;color:var(--muted)">Minimum 15 pcs</div>
+            </div>
+            <div class="price-item">
+              <div style="font-size:12px;color:var(--muted)">Medium</div>
+              <h4>7×10 — ₹10 / pc</h4>
+              <div style="font-size:12px;color:var(--muted)">Minimum 5 pcs</div>
+            </div>
+            <div class="price-item">
+              <div style="font-size:12px;color:var(--muted)">Large</div>
+              <h4>10×15 — ₹25 / pc</h4>
+              <div style="font-size:12px;color:var(--muted)">Minimum 5 pcs</div>
+            </div>
+          </div>
+          <div style="font-size:12px;color:var(--muted);margin-top:8px">Ring polaroid options and customised sizes available. DM for bulk orders & custom designs.</div>
+        </div>
+      </div>
+
+      <aside class="card" style="padding:14px">
+        <div style="text-align:center">
+          <img src="https://via.placeholder.com/380x320?text=Magizh+Krafties+Showcase" alt="product" style="width:100%;border-radius:10px;margin-bottom:12px" />
+          <div style="font-weight:700">Custom Polaroid Set — ₹starting</div>
+          <div style="color:var(--muted);font-size:13px;margin-top:6px">Ready to post or gift — personalised captions, colours & frames.</div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="gallery" style="margin-top:36px">
+      <h3>Gallery</h3>
+      <p style="color:var(--muted);margin-top:6px">A few of our recent creations. Use your own photos for custom polaroids.</p>
+      <div class="gallery" aria-hidden="false">
+        <img src="https://via.placeholder.com/400x300?text=Polaroid+1" alt="polaroid 1">
+        <img src="https://via.placeholder.com/400x300?text=Polaroid+2" alt="polaroid 2">
+        <img src="https://via.placeholder.com/400x300?text=Frame+1" alt="frame 1">
+        <img src="https://via.placeholder.com/400x300?text=Gift+Box" alt="box">
+        <img src="https://via.placeholder.com/400x300?text=Ring+Polaroid" alt="ring">
+        <img src="https://via.placeholder.com/400x300?text=Custom+Set" alt="custom">
+      </div>
+    </section>
+
+    <section id="order" style="margin-top:36px">
+      <h3>Place an Order</h3>
+      <p style="color:var(--muted);margin-top:6px">Fill the form below or message us on Instagram <strong>@magizh_krafties</strong>.</p>
+
+      <div class="card" style="margin-top:12px">
+        <form id="orderForm" onsubmit="handleSubmit(event)">
+          <div class="row">
+            <input type="text" id="name" name="name" placeholder="Your name" required />
+            <input type="tel" id="phone" name="phone" placeholder="Phone / WhatsApp" required />
+          </div>
+          <div style="margin-top:8px">
+            <input type="email" id="email" name="email" placeholder="Email (optional)" />
+          </div>
+          <div style="margin-top:8px">
+            <select id="product" name="product" required style="padding:10px;border-radius:8px;border:1px solid #e6e6e6;width:100%">
+              <option value="">Select product</option>
+              <option>Polaroid - Mini 5×7</option>
+              <option>Polaroid - Medium 7×10</option>
+              <option>Polaroid - Large 10×15</option>
+              <option>Custom frames</option>
+              <option>Gift box / combo</option>
+            </select>
+          </div>
+          <div style="margin-top:8px">
+            <textarea id="details" name="details" placeholder="Order details (quantity, custom text, colours, delivery city)"></textarea>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center;margin-top:10px">
+            <button class="btn btn-primary" type="submit">Send Order</button>
+            <div style="color:var(--muted);font-size:13px">We'll reply on Instagram or WhatsApp.</div>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section id="contact" style="margin-top:36px">
+      <h3>Contact</h3>
+      <div style="display:flex;gap:18px;margin-top:12px;flex-wrap:wrap">
+        <div class="card" style="flex:1;min-width:260px">
+          <strong>Instagram</strong>
+          <div style="color:var(--muted);margin-top:6px">@magizh_krafties</div>
+          <div style="margin-top:10px"><button class="btn btn-outline" onclick="openInstagram()">Open Instagram</button></div>
+        </div>
+
+        <div class="card" style="flex:1;min-width:260px">
+          <strong>Message & Orders</strong>
+          <div style="color:var(--muted);margin-top:6px">WhatsApp: +91-XXXXXXXXXX (replace with your number)</div>
+          <div style="color:var(--muted);margin-top:6px">Email: hello@magizhkrafties.com (replace with your email)</div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <div>
+          <div style="font-weight:700">Magizh Krafties</div>
+          <div style="color:var(--muted);font-size:13px">Handmade gifts & personalised polaroids</div>
+        </div>
+        <div class="social">
+          <a href="#" onclick="openInstagram()">Instagram</a>
+          <a href="mailto:hello@magizhkrafties.com">Email</a>
+        </div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    function openInstagram(){
+      window.open('https://instagram.com/magizh_krafties','_blank')
+    }
+
+    function handleSubmit(e){
+      e.preventDefault();
+      // Create a quick order object and open user's email client with the info.
+      const name = document.getElementById('name').value;
+      const phone = document.getElementById('phone').value;
+      const email = document.getElementById('email').value;
+      const product = document.getElementById('product').value;
+      const details = document.getElementById('details').value;
+
+      const subject = encodeURIComponent('New order from ' + name);
+      const body = encodeURIComponent(
+        `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\nProduct: ${product}\nDetails: ${details}`
+      );
+
+      // Replace the email address below with your real contact email.
+      const mailto = `mailto:hello@magizhkrafties.com?subject=${subject}&body=${body}`;
+      window.location.href = mailto;
+
+      // Optionally show a tiny confirmation UI
+      alert('Order prepared — your email client will open. If it does not, message us on Instagram @magizh_krafties');
+    }
+  </script>
+</body>
+</html>
