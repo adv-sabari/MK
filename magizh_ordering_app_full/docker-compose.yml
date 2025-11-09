@@ -1,0 +1,10 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - '4000:4000'
+    environment:
+      - ADMIN_TOKEN=changeme123
+    volumes:
+      - ./db.sqlite:/app/db.sqlite
