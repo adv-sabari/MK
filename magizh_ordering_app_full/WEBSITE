@@ -1,91 +1,426 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Magizh Krafties - Handmade Gifts</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-    body { background: #faf7f2; color: #333; }
-    header { background: #ffebe0; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    header h1 { font-size: 32px; }
-    header p { font-size: 18px; }
-    nav { background: #ffe0d1; padding: 10px; text-align: center; }
-    nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: bold; }
-    .hero { padding: 60px 20px; text-align: center; background: #fff5ef; }
-    .hero h2 { font-size: 36px; margin-bottom: 10px; }
-    .hero p { font-size: 20px; }
-    .btn { display: inline-block; background: #ff7a59; color: white; padding: 12px 25px; border-radius: 6px; margin-top: 20px; text-decoration: none; font-size: 18px; }
-    .section { padding: 50px 20px; text-align: center; }
-    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; padding: 20px; }
-    .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .card img { width: 100%; border-radius: 10px; }
-    .card h3 { margin: 10px 0; }
-    footer { background: #ffebe0; text-align: center; padding: 20px; margin-top: 40px; }
-  </style>
-</head>
-<body>
+# magizh-krafties-nextjs-v1
 
-<header>
-  <h1>Magizh Krafties</h1>
-  <p>Handmade • Custom • Polaroids • Frames • Gifts</p>
-</header>
+This file contains a full Next.js + Tailwind project (multi-file). Copy each file into your project folder as named and deploy to Vercel. **Read the included README at the end for deployment steps and environment variables.**
 
-<nav>
-  <a href="#home">Home</a>
-  <a href="#products">Products</a>
-  <a href="#about">About</a>
-  <a href="#contact">Contact</a>
-</nav>
+---
 
-<section class="hero" id="home">
-  <h2>Turn Your Memories Into Beautiful Gifts</h2>
-  <p>Custom Polaroids, Handmade Frames & Personalized Gifts</p>
-  <a class="btn" href="#contact">Order Now</a>
-</section>
+--- package.json ---
+{
+  "name": "magizh-krafties",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "14.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "razorpay": "^2.9.0"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.21",
+    "tailwindcss": "^3.4.7"
+  }
+}
 
-<section class="section" id="products">
-  <h2>Our Best Sellers</h2>
-  <div class="products">
+--- next.config.js ---
+module.exports = {
+  reactStrictMode: true,
+  images: {
+    domains: ["via.placeholder.com"],
+  },
+}
 
-    <div class="card">
-      <img src="https://via.placeholder.com/300x300" alt="Polaroids" />
-      <h3>Custom Polaroids</h3>
-      <p>Starting at ₹5 per piece</p>
+--- tailwind.config.js ---
+module.exports = {
+  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  darkMode: 'class',
+  theme: {
+    extend: {},
+  },
+  plugins: [],
+}
+
+--- postcss.config.js ---
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+  },
+}
+
+--- pages/_app.js ---
+import '../styles/globals.css'
+import { useEffect, useState } from 'react'
+import Navbar from '../components/Navbar'
+
+export default function MyApp({ Component, pageProps }) {
+  const [theme, setTheme] = useState('light')
+
+  useEffect(() => {
+    const stored = typeof window !== 'undefined' && localStorage.getItem('theme')
+    if (stored) setTheme(stored)
+  }, [])
+
+  useEffect(() => {
+    if (theme === 'dark') document.documentElement.classList.add('dark')
+    else document.documentElement.classList.remove('dark')
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  return (
+    <>
+      <Navbar theme={theme} setTheme={setTheme} />
+      <Component {...pageProps} />
+    </>
+  )
+}
+
+--- pages/index.js ---
+import Head from 'next/head'
+import ProductCard from '../components/ProductCard'
+
+const PRODUCTS = [
+  { id: 'mini', title: 'Mini Polaroids', price: 5, img: 'https://via.placeholder.com/400x400?text=Mini' },
+  { id: 'med', title: 'Medium Polaroids', price: 10, img: 'https://via.placeholder.com/400x400?text=Medium' },
+  { id: 'large', title: 'Large Polaroids', price: 25, img: 'https://via.placeholder.com/400x400?text=Large' },
+  { id: 'frame', title: 'Custom Frames', price: 299, img: 'https://via.placeholder.com/400x400?text=Frame' },
+]
+
+export default function Home() {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-white dark:from-slate-900 dark:to-slate-800">
+      <Head>
+        <title>Magizh Krafties — Handmade Gifts</title>
+      </Head>
+
+      <main className="max-w-5xl mx-auto p-6">
+        <section className="text-center py-12">
+          <h1 className="text-4xl font-bold">Magizh Krafties</h1>
+          <p className="mt-2 text-gray-600 dark:text-gray-300">Handmade, custom frames & polaroids — crafted with love in Chennai.</p>
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-semibold mb-4">Product Gallery</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {PRODUCTS.map(p => (
+              <ProductCard key={p.id} product={p} />
+            ))}
+          </div>
+        </section>
+
+        <section className="mt-12">
+          <h2 className="text-2xl font-semibold mb-4">How to Order</h2>
+          <ol className="list-decimal pl-6 text-gray-700 dark:text-gray-200">
+            <li>Choose a product and click <strong>Buy</strong>.</li>
+            <li>Fill in your details in the checkout popup.</li>
+            <li>Pay securely using Razorpay (UPI / cards).</li>
+            <li>We’ll confirm and ship across India.</li>
+          </ol>
+        </section>
+
+        <section className="mt-12 text-center text-sm text-gray-500 dark:text-gray-400">
+          <p>© 2025 Magizh Krafties — Handmade with love</p>
+        </section>
+      </main>
     </div>
+  )
+}
 
-    <div class="card">
-      <img src="https://via.placeholder.com/300x300" alt="Gift Frame" />
-      <h3>Handmade Frames</h3>
-      <p>Made with love for special moments</p>
+--- pages/admin.js ---
+import { useEffect, useState } from 'react'
+
+// NOTE: This demo admin uses a simple client-side state store for demo purposes.
+// For production, connect to a DB (Supabase, MongoDB Atlas, Firebase, etc.).
+
+export default function Admin() {
+  const [products, setProducts] = useState([])
+  const [form, setForm] = useState({ title: '', price: '', img: '' })
+
+  useEffect(() => {
+    // load from localStorage (demo persistence)
+    const data = typeof window !== 'undefined' && localStorage.getItem('mk_products')
+    if (data) setProducts(JSON.parse(data))
+  }, [])
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') localStorage.setItem('mk_products', JSON.stringify(products))
+  }, [products])
+
+  function addProduct(e) {
+    e.preventDefault()
+    const id = 'p_' + Date.now()
+    setProducts(prev => [{ ...form, id }, ...prev])
+    setForm({ title: '', price: '', img: '' })
+  }
+
+  function removeProduct(id) {
+    setProducts(prev => prev.filter(p => p.id !== id))
+  }
+
+  return (
+    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-gray-200 p-6">
+      <h1 className="text-2xl font-bold mb-4">Admin Dashboard</h1>
+
+      <section className="mb-6">
+        <h2 className="font-semibold">Add Product</h2>
+        <form onSubmit={addProduct} className="flex flex-col gap-3 max-w-md">
+          <input value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Title" className="p-2 rounded border" required />
+          <input value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} placeholder="Price (INR)" className="p-2 rounded border" required />
+          <input value={form.img} onChange={e => setForm(f => ({ ...f, img: e.target.value }))} placeholder="Image URL" className="p-2 rounded border" />
+          <button className="bg-pink-500 text-white p-2 rounded">Add</button>
+        </form>
+      </section>
+
+      <section>
+        <h2 className="font-semibold mb-2">Products</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {products.length === 0 && <p className="text-sm text-gray-500">No products yet. Add one above.</p>}
+          {products.map(p => (
+            <div key={p.id} className="p-4 bg-gray-50 dark:bg-slate-800 rounded">
+              <div className="flex items-center gap-4">
+                <img src={p.img || 'https://via.placeholder.com/100'} alt="" className="w-20 h-20 object-cover rounded" />
+                <div className="flex-1">
+                  <h3 className="font-semibold">{p.title}</h3>
+                  <p>₹{p.price}</p>
+                </div>
+                <button onClick={() => removeProduct(p.id)} className="text-red-500">Delete</button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="mt-6">
+        <h2 className="font-semibold">Notes</h2>
+        <ul className="list-disc pl-5 text-sm text-gray-500">
+          <li>This admin is demo-only (client-side localStorage). Use a server DB for real orders.</li>
+        </ul>
+      </section>
     </div>
+  )
+}
 
-    <div class="card">
-      <img src="https://via.placeholder.com/300x300" alt="Custom Gifts" />
-      <h3>Custom Gift Packs</h3>
-      <p>Personalised for your loved ones</p>
+--- components/Navbar.js ---
+import Link from 'next/link'
+
+export default function Navbar({ theme, setTheme }) {
+  return (
+    <nav className="bg-white dark:bg-slate-900 shadow">
+      <div className="max-w-5xl mx-auto p-4 flex justify-between items-center">
+        <div className="flex items-center gap-4">
+          <Link href="/"><a className="font-bold">Magizh Krafties</a></Link>
+          <Link href="/admin"><a className="text-sm text-gray-600 dark:text-gray-300">Admin</a></Link>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <button onClick={() => setTheme(prev => prev === 'dark' ? 'light' : 'dark')} className="px-3 py-1 border rounded">
+            {theme === 'dark' ? 'Light' : 'Dark'}
+          </button>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+--- components/ProductCard.js ---
+import { useState } from 'react'
+
+export default function ProductCard({ product }) {
+  const [loading, setLoading] = useState(false)
+
+  async function buy() {
+    setLoading(true)
+    try {
+      const res = await fetch('/api/create-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: product.price * 100, productId: product.id, name: product.title }),
+      })
+      const data = await res.json()
+      if (!data.order) throw new Error(data.message || 'Order failed')
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+        amount: data.order.amount,
+        currency: data.order.currency,
+        name: 'Magizh Krafties',
+        description: product.title,
+        order_id: data.order.id,
+        handler: async function (response) {
+          // verify payment on server
+          const verify = await fetch('/api/verify-payment', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ razorpay_order_id: response.razorpay_order_id, razorpay_payment_id: response.razorpay_payment_id, razorpay_signature: response.razorpay_signature }),
+          })
+          const v = await verify.json()
+          if (v.ok) alert('Payment successful — we will contact you for order details')
+          else alert('Payment verification failed')
+        },
+        prefill: { name: '', email: '' },
+        theme: { color: '#ff5f9e' },
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://checkout.razorpay.com/v1/checkout.js'
+      document.body.appendChild(script)
+      script.onload = () => {
+        // IMPORTANT: window.Razorpay is available after script loads
+        // set key from runtime env
+        options.key = window.__NEXT_DATA__.props.pageProps.runtimeConfig?.NEXT_PUBLIC_RAZORPAY_KEY_ID || process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID
+        const rzp = new window.Razorpay(options)
+        rzp.open()
+      }
+
+    } catch (err) {
+      console.error(err)
+      alert('Something went wrong: ' + (err.message || ''))
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="bg-white dark:bg-slate-800 p-4 rounded shadow">
+      <img src={product.img} alt={product.title} className="w-full h-48 object-cover rounded" />
+      <h3 className="mt-3 font-semibold">{product.title}</h3>
+      <p className="mt-1">₹{product.price}</p>
+      <button onClick={buy} disabled={loading} className="mt-3 w-full bg-pink-500 text-white py-2 rounded">
+        {loading ? 'Please wait...' : 'Buy'}
+      </button>
     </div>
+  )
+}
 
-  </div>
-</section>
+--- pages/api/create-order.js ---
+import Razorpay from 'razorpay'
 
-<section class="section" id="about">
-  <h2>About Us</h2>
-  <p>Magizh Krafties is a handmade gift store bringing your memories to life.
-     We create personalized frames, polaroids, and customised gifts perfect for any occasion.
-     Every piece is crafted with care and love.</p>
-</section>
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ message: 'Method not allowed' })
+  const { amount, productId, name } = req.body
+  if (!amount) return res.status(400).json({ message: 'Missing amount' })
 
-<section class="section" id="contact">
-  <h2>Contact / Order</h2>
-  <p>📩 Instagram: <b>@magizh_krafties</b></p>
-  <p>📱 WhatsApp: <b>+91 XXXXXXXX</b></p>
-  <p>DM us to order your customized gift today!</p>
-</section>
+  try {
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    })
 
-<footer>
-  <p>© 2025 Magizh Krafties — Handmade With Love</p>
-</footer>
+    const options = {
+      amount: amount, // in paise
+      currency: 'INR',
+      receipt: `rcpt_${Date.now()}`,
+      payment_capture: 1,
+    }
 
-</body>
-</html>
+    const order = await razorpay.orders.create(options)
+    // You should save the order (order.id) in your DB along with the product and client details
+
+    res.status(200).json({ order })
+  } catch (err) {
+    console.error('create-order error', err)
+    res.status(500).json({ message: 'Order creation failed', error: err.message })
+  }
+}
+
+--- pages/api/verify-payment.js ---
+import crypto from 'crypto'
+
+export default async function handler(req, res) {
+  if (req.method !== 'POST') return res.status(405).json({ message: 'Method not allowed' })
+  const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body
+  const key_secret = process.env.RAZORPAY_KEY_SECRET
+
+  const generated_signature = crypto.createHmac('sha256', key_secret)
+    .update(razorpay_order_id + '|' + razorpay_payment_id)
+    .digest('hex')
+
+  if (generated_signature === razorpay_signature) {
+    // Payment is valid. Mark order as paid in DB and notify customer.
+    return res.status(200).json({ ok: true })
+  } else {
+    return res.status(400).json({ ok: false })
+  }
+}
+
+--- styles/globals.css ---
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --brand-pink: #ff5f9e;
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  background-color: white;
+}
+
+.dark body {
+  background-color: #0f172a;
+}
+
+/* small utilities */
+.shadow { box-shadow: 0 4px 14px rgba(0,0,0,0.08); }
+
+--- vercel.json ---
+{
+  "version": 2,
+  "builds": [
+    { "src": "package.json", "use": "@vercel/next" }
+  ]
+}
+
+--- README.md ---
+# Magizh Krafties — Next.js + Tailwind + Razorpay (Vercel)
+
+## What's included
+- Next.js app with Product Gallery UI
+- Admin dashboard (demo, client-side localStorage)
+- Razorpay server-side order creation & payment verification
+- Dark mode toggle (persistent in localStorage)
+
+## Setup (local)
+1. Create a project folder and copy the files.
+2. Run:
+```bash
+npm install
+npm run dev
+```
+3. Create environment variables (create a `.env.local` file in project root):
+```
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
+NEXT_PUBLIC_RAZORPAY_KEY_ID=your_razorpay_key_id
+```
+4. Visit `http://localhost:3000`
+
+## Deploy to Vercel
+1. Push repository to GitHub.
+2. Create a new project on Vercel and connect the repo.
+3. In Vercel dashboard, add the Environment Variables (in Project Settings):
+   - RAZORPAY_KEY_ID
+   - RAZORPAY_KEY_SECRET
+   - NEXT_PUBLIC_RAZORPAY_KEY_ID
+4. Deploy. Vercel will run `npm run build`.
+
+## Important notes
+- **DB / persistence:** The admin dashboard in this demo stores products in `localStorage` to keep the example self-contained. For production, connect a hosted database (Supabase, Firebase, MongoDB Atlas) and store orders there.
+- **Security:** Never expose `RAZORPAY_KEY_SECRET` on the client. Only `NEXT_PUBLIC_RAZORPAY_KEY_ID` can be public.
+- **Payments:** Always verify payments server-side (this project implements signature verification in `/api/verify-payment`).
+
+--- .env.local.example ---
+RAZORPAY_KEY_ID=rzp_test_XXXX
+RAZORPAY_KEY_SECRET=XXXX
+NEXT_PUBLIC_RAZORPAY_KEY_ID=rzp_test_XXXX
+
