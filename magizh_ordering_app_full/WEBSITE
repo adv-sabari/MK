@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Magizh Krafties - Handmade Gifts</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #faf7f2; color: #333; }
+    header { background: #ffebe0; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    header h1 { font-size: 32px; }
+    header p { font-size: 18px; }
+    nav { background: #ffe0d1; padding: 10px; text-align: center; }
+    nav a { margin: 0 15px; text-decoration: none; color: #333; font-weight: bold; }
+    .hero { padding: 60px 20px; text-align: center; background: #fff5ef; }
+    .hero h2 { font-size: 36px; margin-bottom: 10px; }
+    .hero p { font-size: 20px; }
+    .btn { display: inline-block; background: #ff7a59; color: white; padding: 12px 25px; border-radius: 6px; margin-top: 20px; text-decoration: none; font-size: 18px; }
+    .section { padding: 50px 20px; text-align: center; }
+    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; padding: 20px; }
+    .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .card img { width: 100%; border-radius: 10px; }
+    .card h3 { margin: 10px 0; }
+    footer { background: #ffebe0; text-align: center; padding: 20px; margin-top: 40px; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Magizh Krafties</h1>
+  <p>Handmade • Custom • Polaroids • Frames • Gifts</p>
+</header>
+
+<nav>
+  <a href="#home">Home</a>
+  <a href="#products">Products</a>
+  <a href="#about">About</a>
+  <a href="#contact">Contact</a>
+</nav>
+
+<section class="hero" id="home">
+  <h2>Turn Your Memories Into Beautiful Gifts</h2>
+  <p>Custom Polaroids, Handmade Frames & Personalized Gifts</p>
+  <a class="btn" href="#contact">Order Now</a>
+</section>
+
+<section class="section" id="products">
+  <h2>Our Best Sellers</h2>
+  <div class="products">
+
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300" alt="Polaroids" />
+      <h3>Custom Polaroids</h3>
+      <p>Starting at ₹5 per piece</p>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300" alt="Gift Frame" />
+      <h3>Handmade Frames</h3>
+      <p>Made with love for special moments</p>
+    </div>
+
+    <div class="card">
+      <img src="https://via.placeholder.com/300x300" alt="Custom Gifts" />
+      <h3>Custom Gift Packs</h3>
+      <p>Personalised for your loved ones</p>
+    </div>
+
+  </div>
+</section>
+
+<section class="section" id="about">
+  <h2>About Us</h2>
+  <p>Magizh Krafties is a handmade gift store bringing your memories to life.
+     We create personalized frames, polaroids, and customised gifts perfect for any occasion.
+     Every piece is crafted with care and love.</p>
+</section>
+
+<section class="section" id="contact">
+  <h2>Contact / Order</h2>
+  <p>📩 Instagram: <b>@magizh_krafties</b></p>
+  <p>📱 WhatsApp: <b>+91 XXXXXXXX</b></p>
+  <p>DM us to order your customized gift today!</p>
+</section>
+
+<footer>
+  <p>© 2025 Magizh Krafties — Handmade With Love</p>
+</footer>
+
+</body>
+</html>
